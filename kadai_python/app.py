@@ -7,7 +7,7 @@ app.secret_key = ''.join(random.choices(string.ascii_letters, k=256))
 
 
 @app.route('/', methods=['GET'])
-def index():
+def top():
     msg = request.args.get('msg')
     
     if msg == None:
@@ -20,9 +20,11 @@ def index():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     user_name = request.form.get('username')
+    email = request.form.get('email')
+    address = request.form.get('address')
     password = request.form.get('password')
     
-    if db.login(user_name, password):
+    if db.login(user_name, email, address, password):
         session['user'] = True
         session.permanent = True
         app.permanent_session_lifetime = timedelta(minutes=30)
@@ -52,6 +54,8 @@ def register_form():
 @app.route('/register_exe', methods=['POST'])
 def register_exe():
     user_name = request.form.get('user_name')
+    email = request.form.get('email')
+    address = request.form.get('address')
     password = request.form.get('password')
     
     if user_name == '':
@@ -61,11 +65,11 @@ def register_exe():
         error = 'パスワードが入力されてません。'
         return render_template('register.html', error=error)
     
-    count = db.insert_user(user_name, password)
+    count = db.insert_user(user_name, email, address, password)
     
     if count == 1:
         msg = '登録が完了しました。'
-        return redirect(url_for('index', msg=msg))
+        return redirect(url_for('index.html', msg=msg))
     else:
         error = '登録に失敗しました。'
         return render_template('register.html', error=error)
@@ -77,6 +81,8 @@ def history():
 @app.route('/basket')
 def basket():
     return render_template('basket.html')
+
+
 
 
 
