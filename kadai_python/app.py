@@ -11,20 +11,18 @@ def top():
     msg = request.args.get('msg')
     
     if msg == None:
-        return render_template('index.html')
+        return render_template('login.html')
     else:
-        return render_template('index.html', msg=msg)
+        return render_template('login.html', msg=msg)
     
     return render_template('index.html')
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     user_name = request.form.get('username')
-    email = request.form.get('email')
-    address = request.form.get('address')
     password = request.form.get('password')
     
-    if db.login(user_name, email, address, password):
+    if db.login(user_name, password):
         session['user'] = True
         session.permanent = True
         app.permanent_session_lifetime = timedelta(minutes=30)
@@ -61,6 +59,12 @@ def register_exe():
     if user_name == '':
         error = 'ユーザー名が入力されてません。'
         return render_template('register.html', error=error)
+    if email == '':
+        error = 'メールアドレスが入力されてません。'
+        return render_template('register.html', error=error)
+    if address == '':
+        error = '住所が入力されてません。'
+        return render_template('register.html', error=error)
     if password == '':
         error = 'パスワードが入力されてません。'
         return render_template('register.html', error=error)
@@ -69,7 +73,7 @@ def register_exe():
     
     if count == 1:
         msg = '登録が完了しました。'
-        return redirect(url_for('index.html', msg=msg))
+        return redirect(url_for('top', msg=msg))
     else:
         error = '登録に失敗しました。'
         return render_template('register.html', error=error)
