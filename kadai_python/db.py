@@ -38,6 +38,50 @@ def insert_user(user_name, email, address, password):
         
     return count
 
+def insert_goods(goods_name, detail, price, stock):
+    sql = 'INSERT INTO goods VALUES (default, %s, %s, %s, %s)'
+    
+    try :
+        connection = get_connection()
+        cursor = connection.cursor()
+        
+        cursor.execute(sql, (goods_name, detail, price, stock))
+        count = cursor.rowcount # 更新内容を取得
+        connection.commit()
+    except psycopg2.DatabaseError:
+        count = 0
+    finally:
+        cursor.close()
+        connection.close()
+        
+    return count
+
+def select_all_goods():
+    connection = get_connection()
+    cursor = connection.cursor()
+    sql = 'SELECT name, detail, price, stock FROM goods'
+    
+    cursor.execute(sql)
+    rows = cursor.fetchall()
+    
+    cursor.close()
+    connection.close()
+    
+    return rows
+
+def select_all_users():
+    connection = get_connection()
+    cursor = connection.cursor()
+    sql = 'SELECT name, email, address FROM shop_user'
+    
+    cursor.execute(sql)
+    rows = cursor.fetchall()
+    
+    cursor.close()
+    connection.close()
+    
+    return rows
+
 def login(user_name, password):
     sql = 'SELECT hashed_password, salt FROM shop_user WHERE name = %s'
     flg = False

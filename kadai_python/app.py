@@ -77,6 +77,55 @@ def register_exe():
     else:
         error = '登録に失敗しました。'
         return render_template('register.html', error=error)
+    
+@app.route('/goods_register')
+def goods_register_form():
+    return render_template('goods_register.html')
+
+@app.route('/goods_register_exe', methods=['POST'])
+def goods_register_exe():
+    goods_name = request.form.get('goods_name')
+    detail = request.form.get('detail')
+    price = request.form.get('price')
+    stock = request.form.get('stock')
+    
+    if goods_name == '':
+        error = '商品名が入力されてません。'
+        return render_template('goods_register.html', error=error)
+    if detail == '':
+        error = '詳細が入力されてません。'
+        return render_template('goods_register.html', error=error)
+    if price == '':
+        error = '価格が入力されてません。'
+        return render_template('goods_register.html', error=error)
+    if stock == '':
+        error = '在庫が入力されてません。'
+        return render_template('goods_register.html', error=error)
+    
+    count = db.insert_goods(goods_name, detail, price, stock)
+    
+    if count == 1:
+        msg = '登録が完了しました。'
+        return redirect(url_for('top', msg=msg))
+    else:
+        error = '登録に失敗しました。'
+        print()
+        return render_template('goods_register.html', error=error)
+    
+@app.route('/delete')
+def delete_form():
+    return render_template('delete.html')
+
+@app.route('/goods_list')
+def goods_list():
+    goods_list = db.select_all_goods()
+    return render_template('goods_list.html', goods=goods_list)
+
+@app.route('/user_list')
+def user_list():
+    user_list = db.select_all_users()
+    return render_template('user_list.html', users = user_list)
+
            
 @app.route('/history')
 def history():
