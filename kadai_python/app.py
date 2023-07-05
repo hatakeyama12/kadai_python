@@ -126,6 +126,53 @@ def user_list():
     user_list = db.select_all_users()
     return render_template('user_list.html', users = user_list)
 
+@app.route('/delete_user')
+def delete_user():
+    return render_template('delete_user.html')
+
+@app.route('/delete_user_exe', methods=['POST'])
+def delete_user_exe():
+    id = request.form.get('id')
+    
+    if id == '':
+        error = 'ユーザーIDが入力されていません'
+        return render_template('delete_user.html', error=error)
+    
+    count = db.delete_user(id)
+    
+    if count == 1:
+        msg = '対象のユーザーを削除しました'
+        return redirect(url_for('delete_user', msg=msg))
+    else:
+        error = '対象ユーザーの削除に失敗しました'
+        return render_template('delete_user.html', error=error )
+    
+@app.route('/delete_goods')
+def delete_goods():
+    return render_template('delete_goods.html')
+
+@app.route('/delete_goods_exe', methods=['POST'])
+def delete_goods_exe():
+    id = request.form.get('id')
+    
+    if id == '':
+        error = '商品IDが入力されていません'
+        return render_template('delete_user.html', error=error)
+    
+    count = db.delete_goods(id)
+    
+    if count == 1:
+        msg = '対象の商品を削除しました'
+        return redirect(url_for('delete_goods', msg=msg))
+    else:
+        error = '対象の商品の削除に失敗しました'
+        return render_template('delete_goods.html', error=error )
+    
+    
+    
+
+
+
            
 @app.route('/history')
 def history():

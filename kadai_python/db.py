@@ -56,6 +56,44 @@ def insert_goods(goods_name, detail, price, stock):
         
     return count
 
+def delete_user(id):
+    sql = 'DELETE FROM shop_user WHERE id = %s'
+    
+    try:
+        connection = get_connection()
+        cursor = connection.cursor()
+        
+        cursor.execute(sql, (id,))
+        count = cursor.rowcount
+        connection.commit()
+    except psycopg2.DatabaseError:
+        count = 0
+    finally:
+        cursor.close()
+        connection.close()
+        
+    return count
+
+def delete_goods(id):
+    sql = 'DELETE FROM goods WHERE id = %s'
+    
+    try:
+        connection = get_connection()
+        cursor = connection.cursor()
+        
+        cursor.execute(sql, (id,))
+        count = cursor.rowcount
+        connection.commit()
+    except psycopg2.DatabaseError:
+        count = 0
+    finally:
+        cursor.close()
+        connection.close()
+        
+    return count
+    
+        
+
 def select_all_goods():
     connection = get_connection()
     cursor = connection.cursor()
