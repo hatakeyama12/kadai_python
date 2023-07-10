@@ -91,6 +91,38 @@ def delete_goods(id):
         connection.close()
         
     return count
+
+def update_goods(id, name, detail, price, stock):
+    sql = 'UPDATE goods SET name = %s, detail = %s, price = %s, stock = %s WHERE id = %s'
+    
+    try:
+        connection = get_connection()
+        cursor = connection.cursor()
+        
+        cursor.execute(sql, (name, detail, price, stock, id))
+        count = cursor.rowcount
+        connection.commit()
+    except psycopg2.DatabaseError:
+        count = 0
+    finally:
+        cursor.close()
+        connection.close()
+    
+    return count
+
+def search_goods(key):
+    connection = get_connection()
+    cursor = connection.cursor()
+    sql = 'SELECT name, detail, price, stock FROM goods WHERE name LIKE %s'
+    key = '%' + key + '%'
+    
+    cursor.execute(sql, (key,))
+    rows = cursor.fetchall()
+    
+    cursor.close()
+    connection.close()
+    
+    return rows
     
         
 
@@ -145,8 +177,31 @@ def login(user_name, password):
     
     return flg
 
+def admin_login(user_name, password):
+    sql = "SELECT hashed_password, salt FROM shop_user WHERE name = 'hatakeyama'"
+    flg = False
+    
+    try:
+        connection = get_connection()
+        cursor = connection.cursor()
+        cursor.execute(sql, (user_name))
+        admin = cursor.fetchone()
+        
+        if admin != None:
+            salt = admin[1]
+        
+        hashed_password = get_hash(password, salt)
 
+        if hashed_password == admin[0]:
+                flg = True
 
+    except psycopg2.DatabaseError:
+        flg = False
+    finally:
+        cursor.close()
+        connection.close()
+        
+    return flg
 
 
 

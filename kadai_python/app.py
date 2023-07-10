@@ -21,8 +21,12 @@ def top():
 def login():
     user_name = request.form.get('username')
     password = request.form.get('password')
-    
-    if db.login(user_name, password):
+    if db.admin_login(user_name, password):
+        session['admin'] = True
+        session.permanent = True
+        app.permanent_session_lifetime = timedelta(minutes=30)
+        return redirect(url_for('admin_mypage'))
+    elif db.login(user_name, password):
         session['user'] = True
         session.permanent = True
         app.permanent_session_lifetime = timedelta(minutes=30)
@@ -36,12 +40,24 @@ def login():
 @app.route('/logout')
 def logout():
     session.pop('user', None)
-    return redirect(url_for('login.html'))
+    return redirect(url_for('top'))
+
+@app.route('/admin_logout')
+def admin_logout():
+    session.pop('admin', None)
+    return redirect(url_for('top'))
 
 @app.route('/mypage', methods=['GET'])
 def mypage():
     if 'user' in session:
         return render_template('mypage.html')
+    else:
+        return redirect(url_for('index'))
+    
+@app.route('/admin_mypage', methods=['GET'])
+def admin_mypage():
+    if 'admin' in session:
+        return render_template('admin_mypage.html')
     else:
         return redirect(url_for('index'))
     
@@ -168,6 +184,41 @@ def delete_goods_exe():
         error = '対象の商品の削除に失敗しました'
         return render_template('delete_goods.html', error=error )
     
+@app.route('/update_goods')
+def update_goods():
+    return render_template('update_goods.html')
+
+@app.route('/update_goods_exe', methods=['POST'])
+def update_goods_exe():
+   
+    name = request.form.get('name')
+    detail = request.form.get('detail')
+    price = request.form.get('price')
+    stock = request.form.get('stock')
+    id = request.form.get('id')
+    
+    if id == '':
+        error = '商品IDが入力されていません'
+        return render_template('update_goods.html', error=error)
+    
+    count = db.update_goods(id, name, detail, price, stock)
+    
+    if count == 1:
+        msg = '商品情報を編集しました'
+        return redirect(url_for('update_goods', msg=msg))
+    else:
+        error = '商品情報の編集に失敗しました'
+        return render_template('update_goods.html', error=error)
+    
+@app.route('/search_goods')
+def search_goods():
+    return render_template('search_goods.html')
+
+@app.route('/search_goods_exe', methods=['POST'])
+def search_goods_exe():
+    name = request.form.get('name')
+    goods_list = db.search_goods(name)
+    return render_template('goods_list.html', goods=goods_list)
     
     
 
