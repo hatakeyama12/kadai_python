@@ -8,13 +8,13 @@
 
 {% block content %}
     <div class="box3">
+    <h1>商品編集</h1>
     {% if error != null%}
-        <p style="color:red;">{{error}}</p>
+        <p style="color:red;" class="error">{{error}}</p>
     {% endif %}
     {% if msg != null%}
         <p style="color:blue;">{{msg}}</p>
     {% endif %}
-    <h1>商品編集</h1>
     <form action="{{url_for('update_goods_exe')}}" method="post">
         <p class="text">変更したい商品のIDを入力してください</p><br>
         <input type="text" name="id" placeholder="商品ID"><br>

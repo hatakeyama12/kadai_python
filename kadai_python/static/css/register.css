@@ -7,8 +7,8 @@ form {
 	font-size: 28px;
 }
 
-p {
-	margin-left:480px;
+p.error {
+	margin-left:30px;
 }
 
 h1 {

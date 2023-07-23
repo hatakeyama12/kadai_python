@@ -11,7 +11,7 @@
     <div class="box3">
     <h1>アカウント登録</h1>
     {% if error != null %}
-        <p style="color: red;">{{ error }}</p>
+        <p style="color: red;" class="error">{{ error }}</p>
     {% endif %}
     <form action="{{url_for('register_exe')}}" method="post">
         <input type="text" name="user_name" placeholder="ユーザー名"><br>
