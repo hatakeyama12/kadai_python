@@ -1,21 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>商品登録</title>
-</head>
-<body>
-    <h3>追加したい商品の情報を入力してください</h3>
+{% extends "admin_layout.html" %}
+
+{% block css %}
+<link rel="stylesheet" href="{{url_for('static', filename='/css/goods_register.css')}}">
+{% endblock %}
+
+{% block content %}
+    <div class="box3">
+    <h1 class="title">商品登録</h1>
     {% if error != null %}
-        <p style="color: red;">{{ error }}</p>
+        <p style="color: red;" class="error">{{ error }}</p>
     {% endif %}
     <form action="{{url_for('goods_register_exe')}}" method="post">
-        商品名：<input type="text" name="goods_name"><br>
-        詳細：<input type="text" name="detail"><br>
-        価格：<input type="text" name="price"><br>
-        在庫：<input type="text" name="stock"><br>
-        <button type="submit">登録</button>
+        <input type="text" name="goods_name" placeholder="商品名"><br>
+        <input type="text" name="detail" placeholder="詳細"><br>
+        <input type="text" name="price" placeholder="価格"><br>
+        <input type="text" name="stock" placeholder="在庫"><br>
+        <input type="submit" value="登録" class="hoge"></button>
     </form>
-</body>
-</html>
+    </div>
+{% endblock %}
