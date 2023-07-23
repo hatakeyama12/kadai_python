@@ -1,0 +1,18 @@
+{% extends "layout.html" %}
+
+{% block css %}
+<link rel="stylesheet" href="{{url_for('static', filename='/css/goods_buy.css')}}">
+{% endblock %}
+
+{% block content %}
+<div class="box3">
+<h1>商品購入</h1>
+<p class="text">購入する商品のIDと購入数を入力してください。</p>
+<form action="{{url_for('goods_buy_exe')}}" method="post">
+    <input type="text" name="id" placeholder="商品ID"><br>
+    <input type="text" name="number" placeholder="購入数"><br>
+    <input type="submit" value="購入" class="hoge"></input>
+</form>
+<a href="{{url_for('goods_list')}}" class="back" style="text-decoration:none;">戻る</a>
+</div>
+{% endblock %}

@@ -1,0 +1,9 @@
+{% extends "layout.html" %}
+
+{% block css %}
+<link rel="stylesheet" href="{{url_for('static', filename='/css/goods_buy_success.css')}}">
+{% endblock %}
+
+{% block content %}
+<h1 class="success">商品の購入が確定しました</h1>
+{% endblock %}
