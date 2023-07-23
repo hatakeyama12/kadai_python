@@ -1,15 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h1>利用者一覧</h1>
+{% extends "admin_layout.html" %}
+
+{% block content %}
+    <form action="{{url_for('search_user_exe')}}" method="post">
+        <input type="text" name="name" placeholder="名前を入力してください">
+        <input type="submit" value="検索">
+    </form>
     <table class="table table-striped">
         <thead>
             <tr>
+                <th>ID</th>
                 <th>ユーザー名</th>
                 <th>メールアドレス</th>
                 <th>住所</th>
@@ -21,8 +20,10 @@
                 <td>{{ user[0] }}</td>
                 <td>{{ user[1] }}</td>
                 <td>{{ user[2] }}</td>
+                <td>{{ user[3] }}</td>
             </tr>
             {% endfor %}
         </tbody>
-</body>
-</html>
+    </table>
+{% endblock %}
+    
