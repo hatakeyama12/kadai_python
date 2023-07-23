@@ -110,10 +110,60 @@ def update_goods(id, name, detail, price, stock):
     
     return count
 
+def update_user(id, name, email, address):
+    sql = 'UPDATE shop_user SET name = %s, email = %s, address = %s WHERE id = %s'
+    
+    try:
+        connection = get_connection()
+        cursor = connection.cursor()
+        
+        cursor.execute(sql, (name, email, address, id))
+        count = cursor.rowcount
+        connection.commit()
+    except psycopg2.DatabaseError:
+        count = 0
+    finally:
+        cursor.close()
+        connection.close()
+        
+    return count
+
+def goods_buy(id,number):
+    sql = 'UPDATE goods SET stock = stock - %s WHERE id = %s'
+    
+    try:
+        connection = get_connection()
+        cursor = connection.cursor()
+        
+        cursor.execute(sql, (number,id,))
+        count = cursor.rowcount
+        connection.commit()
+    except psycopg2.DatabaseError:
+        count = 0
+    finally:
+        cursor.close()
+        connection.close()
+        
+    return count
+
 def search_goods(key):
     connection = get_connection()
     cursor = connection.cursor()
-    sql = 'SELECT name, detail, price, stock FROM goods WHERE name LIKE %s'
+    sql = 'SELECT id, name, detail, price, stock FROM goods WHERE name LIKE %s ORDER BY id ASC'
+    key = '%' + key + '%'
+    
+    cursor.execute(sql, (key,))
+    rows = cursor.fetchall()
+    
+    cursor.close()
+    connection.close()
+    
+    return rows
+
+def search_users(key):
+    connection = get_connection()
+    cursor = connection.cursor()
+    sql = 'SELECT id, name, email, address FROM shop_user WHERE name LIKE %s ORDER BY id ASC'
     key = '%' + key + '%'
     
     cursor.execute(sql, (key,))
@@ -129,7 +179,7 @@ def search_goods(key):
 def select_all_goods():
     connection = get_connection()
     cursor = connection.cursor()
-    sql = 'SELECT name, detail, price, stock FROM goods'
+    sql = 'SELECT id, name, detail, price, stock FROM goods ORDER BY id ASC'
     
     cursor.execute(sql)
     rows = cursor.fetchall()
@@ -142,7 +192,7 @@ def select_all_goods():
 def select_all_users():
     connection = get_connection()
     cursor = connection.cursor()
-    sql = 'SELECT name, email, address FROM shop_user'
+    sql = 'SELECT id, name, email, address FROM shop_user ORDER BY id ASC'
     
     cursor.execute(sql)
     rows = cursor.fetchall()

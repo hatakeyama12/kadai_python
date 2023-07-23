@@ -1,0 +1,63 @@
+@charset "UTF-8";
+
+form {
+	margin-top: -20px;
+	margin-bottom: 25px;
+	margin-left: 57px;
+}
+
+p.error {
+	margin-left:480px;
+}
+
+p.text {
+    font-size: 20px;
+    margin-top: 70px;
+}
+
+p.text2 {
+    font-size: 20px;
+    margin-top: 30px;
+}
+
+
+h1 {
+	margin-left: 125px;
+}
+
+input {
+	font-size:28px;
+    margin-top: 10px;
+}
+
+input:last-child {
+	text-align: center;
+    color:white;
+    background:cyan;/*背景色*/
+}
+
+input.hoge {
+	width:315px;
+    color:white;
+    background:red;/*背景色*/
+    margin-bottom: 40px;
+}
+
+/* a {
+	font-size:20px;
+	margin-left:140px;
+} */
+
+
+/* a:last-child{
+	margin-left: 185px;
+} */
+
+.box3 {
+    background-color:lightgrey;
+    margin-left: 450px;
+    margin-right:400px;
+    margin-top: 50px;
+}
+
+

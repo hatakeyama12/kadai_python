@@ -30,7 +30,7 @@ def login():
         session['user'] = True
         session.permanent = True
         app.permanent_session_lifetime = timedelta(minutes=30)
-        return redirect(url_for('mypage'))
+        return redirect(url_for('goods_list'))
     else:
         error = 'ログインに失敗しました。'
         
@@ -89,10 +89,14 @@ def register_exe():
     
     if count == 1:
         msg = '登録が完了しました。'
-        return redirect(url_for('top', msg=msg))
+        return redirect(url_for('register_success', msg=msg))
     else:
         error = '登録に失敗しました。'
         return render_template('register.html', error=error)
+    
+@app.route('/register_success')
+def register_success():
+    return render_template('register_success.html')
     
 @app.route('/goods_register')
 def goods_register_form():
@@ -122,11 +126,15 @@ def goods_register_exe():
     
     if count == 1:
         msg = '登録が完了しました。'
-        return redirect(url_for('top', msg=msg))
+        return redirect(url_for('goods_register_success', msg=msg))
     else:
         error = '登録に失敗しました。'
         print()
         return render_template('goods_register.html', error=error)
+    
+@app.route('/goods_register_success')
+def goods_register_success():
+    return render_template('goods_register_success.html')
     
 @app.route('/delete')
 def delete_form():
@@ -136,6 +144,11 @@ def delete_form():
 def goods_list():
     goods_list = db.select_all_goods()
     return render_template('goods_list.html', goods=goods_list)
+
+@app.route('/admin_goods_list')
+def admin_goods_list():
+    goods_list = db.select_all_goods()
+    return render_template('admin_goods_list.html', goods=goods_list)
 
 @app.route('/user_list')
 def user_list():
@@ -158,10 +171,14 @@ def delete_user_exe():
     
     if count == 1:
         msg = '対象のユーザーを削除しました'
-        return redirect(url_for('delete_user', msg=msg))
+        return redirect(url_for('delete_user_success', msg=msg))
     else:
         error = '対象ユーザーの削除に失敗しました'
         return render_template('delete_user.html', error=error )
+    
+@app.route('/delete_user_success')
+def delete_user_success():
+    return render_template('delete_user_success.html')
     
 @app.route('/delete_goods')
 def delete_goods():
@@ -179,10 +196,14 @@ def delete_goods_exe():
     
     if count == 1:
         msg = '対象の商品を削除しました'
-        return redirect(url_for('delete_goods', msg=msg))
+        return redirect(url_for('delete_goods_success', msg=msg))
     else:
         error = '対象の商品の削除に失敗しました'
         return render_template('delete_goods.html', error=error )
+    
+@app.route('/delete_goods_success')
+def delete_goods_success():
+    return render_template('delete_goods_success.html')
     
 @app.route('/update_goods')
 def update_goods():
@@ -205,10 +226,22 @@ def update_goods_exe():
     
     if count == 1:
         msg = '商品情報を編集しました'
-        return redirect(url_for('update_goods', msg=msg))
+        return redirect(url_for('update_goods_success', msg=msg))
     else:
         error = '商品情報の編集に失敗しました'
         return render_template('update_goods.html', error=error)
+    
+@app.route('/update_goods_success')
+def update_goods_success():
+    return render_template('update_goods_success.html')
+
+@app.route('/update_user')
+def update_user():
+    return render_template('update_user.html')
+
+# @app.route('/update_user_exe', methods=['POST'])
+# def update_user_exe():
+    
     
 @app.route('/search_goods')
 def search_goods():
@@ -219,8 +252,44 @@ def search_goods_exe():
     name = request.form.get('name')
     goods_list = db.search_goods(name)
     return render_template('goods_list.html', goods=goods_list)
+
+@app.route('/admin_search_goods_exe', methods=['POST'])
+def admin_search_goods_exe():
+    name = request.form.get('name')
+    goods_list = db.search_goods(name)
+    return render_template('admin_goods_list.html', goods=goods_list)
+
+@app.route('/search_user_exe', methods=['POST'])
+def search_user_exe():
+    name = request.form.get('name')
+    user_list = db.search_users(name)
+    return render_template('user_list.html', users=user_list)
+
+@app.route('/goods_buy')
+def goods_buy():
+    return render_template('goods_buy.html')
+
+@app.route('/goods_buy_exe', methods=['POST'])
+def goods_buy_exe():
+    id = request.form.get('id')
+    number = request.form.get('number')
     
+    if id == '':
+        error = '商品IDが入力されてません'
+        return render_template('goods_buy.html', error)
     
+    count = db.goods_buy(id,number)
+    
+    if count == 1:
+        msg = '商品の購入が確定しました'
+        return redirect(url_for('goods_buy_success', msg=msg))
+    else:
+        error = '商品の購入に失敗しました'
+        return render_template('goods_buy.html', error=error)
+    
+@app.route('/goods_buy_success')
+def goods_buy_success():
+    return render_template('goods_buy_success.html')
 
 
 
