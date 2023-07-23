@@ -1,11 +1,7 @@
-{% extends "layout.html" %}
-
-{% block css %}
-<!-- なし -->
-{% endblock %}
+{% extends "admin_layout.html" %}
 
 {% block content %}
-    <form action="{{url_for('search_goods_exe')}}" method="post">
+    <form action="{{url_for('admin_search_goods_exe')}}" method="post">
         <input type="text" name="name" placeholder="商品名を入力してください">
         <input type="submit" value="検索">
     </form>
@@ -32,3 +28,4 @@
         </tbody>
     </table>
 {% endblock %}
+   
