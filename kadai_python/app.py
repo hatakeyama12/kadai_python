@@ -52,14 +52,14 @@ def mypage():
     if 'user' in session:
         return render_template('mypage.html')
     else:
-        return redirect(url_for('index'))
+        return redirect(url_for('top'))
     
 @app.route('/admin_mypage', methods=['GET'])
 def admin_mypage():
     if 'admin' in session:
         return render_template('admin_mypage.html')
     else:
-        return redirect(url_for('index'))
+        return redirect(url_for('top'))
     
 @app.route('/register')
 def register_form():
@@ -190,7 +190,7 @@ def delete_goods_exe():
     
     if id == '':
         error = '商品IDが入力されていません'
-        return render_template('delete_user.html', error=error)
+        return render_template('delete_goods.html', error=error)
     
     count = db.delete_goods(id)
     
