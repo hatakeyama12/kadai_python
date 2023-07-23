@@ -1,0 +1,96 @@
+@charset "UTF-8";
+
+.menu {
+	font-size: 35px;
+	margin-left: 420px;
+	margin-top: 30px;
+}
+
+.goodsregister {
+	margin-left: -30px;
+    margin-bottom: 50px;
+    width: 200px;
+    height: 80px;
+    line-height: 80px;
+    border-radius: 100vh;
+    text-align: center;
+    border: solid 3px gray;/*線*/
+}
+
+.userlist {
+    margin-left: 90px;
+    margin-bottom: 50px;
+    width: 200px;
+    height: 80px;
+    line-height: 80px;
+    border-radius: 100vh;
+    text-align: center;
+    border: solid 3px gray;/*線*/
+}
+
+.yoko {
+	display:flex;
+}
+
+.goodslist {
+    margin-left: -30px;
+    margin-bottom: 50px;
+    width: 200px;
+    height: 80px;
+    line-height: 80px;
+    border-radius: 100vh;
+    text-align: center;
+    border: solid 3px gray;/*線*/
+}
+
+.userdelete {
+    margin-left: 90px;
+    margin-bottom: 50px;
+    width: 200px;
+    height: 80px;
+    line-height: 80px;
+    border-radius: 100vh;
+    text-align: center;
+    border: solid 3px gray;/*線*/
+}
+
+.yoko2 {
+    display:flex;
+}
+
+.goodsdelete {
+    margin-left: -30px;
+    margin-bottom: 50px;
+    width: 200px;
+    height: 80px;
+    line-height: 80px;
+    border-radius: 100vh;
+    text-align: center;
+    border: solid 3px gray;/*線*/
+}
+
+.goodsupdate {
+    margin-left: 90px;
+    margin-bottom: 50px;
+    width: 200px;
+    height: 80px;
+    line-height: 80px;
+    border-radius: 100vh;
+    text-align: center;
+    border: solid 3px gray;/*線*/
+}
+
+.yoko3 {
+    display:flex;
+}
+
+.logout {
+    margin-left: 115px;
+    margin-bottom: 50px;
+    width: 200px;
+    height: 80px;
+    line-height: 80px;
+    border-radius: 100vh;
+    text-align: center;
+    border: solid 3px gray;/*線*/
+}

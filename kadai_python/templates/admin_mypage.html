@@ -1,19 +1,35 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h3>ようこそ、管理者様</h3>
-    <a href="{{url_for('goods_register_form')}}">商品登録へ</a><br>
-    <a href="{{url_for('goods_list')}}">商品一覧へ</a><br>
-    <a href="{{url_for('user_list')}}">利用者一覧へ</a><br>
-    <a href="{{url_for('delete_user')}}">ユーザー削除</a><br>
-    <a href="{{url_for('delete_goods')}}">商品削除</a><br>
-    <a href="{{url_for('update_goods')}}">商品編集</a><br>
-    <a href="{{url_for('search_goods')}}">商品検索へ</a><br>
-    <a href="{{url_for('admin_logout')}}">ログアウト</a>
-</body>
-</html>
+{% extends "admin_layout.html" %}
+
+{% block css %}
+<link rel="stylesheet" href="{{url_for('static', filename='/css/admin.css')}}">
+{% endblock %}
+
+{% block content %}
+    <h1>ようこそ、管理者様</h1>
+    <div class="menu">
+        <div class="yoko">
+            <div class="goodsregister">
+                <a href="{{url_for('goods_register_form')}}" style="text-decoration:none;" >商品登録</a>
+            </div>
+            <div class="userlist">
+                <a href="{{url_for('user_list')}}" style="text-decoration:none;" >利用者一覧</a>
+            </div>
+        </div>
+        <div class="yoko2">
+            <div class="goodslist">
+                <a href="{{url_for('admin_goods_list')}}" style="text-decoration:none;" >商品一覧</a>
+            </div>
+            <div class="userdelete">
+                <a href="{{url_for('delete_user')}}" style="text-decoration:none;" >利用者削除</a>
+            </div>
+        </div>
+        <div class="yoko3">
+            <div class="goodsdelete">
+                <a href="{{url_for('delete_goods')}}" style="text-decoration:none;" >商品削除</a>
+            </div>
+            <div class="goodsupdate">
+                <a href="{{url_for('update_goods')}}" style="text-decoration:none;" >商品編集</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}
